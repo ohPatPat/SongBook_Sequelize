@@ -1,40 +1,51 @@
+import req from "express/lib/request";
+import res from "express/lib/response";
 import ArtistModel from "../Modals/artist.model.js";
 
-const model = new ArtistModel()
 
-class ArtistController {
+class ArtistModel {
     constructor() { }
 
-    list = async (req, res) => {
-        const result = await model.list(req, res)
-        res.json(result)
+    list = async(req, res) = {
+        const result = await ArtistModel.findAll({
+
+        })
+    res.json(result)
+    }
+    get = async(req, res) = {
+        const result = await ArtistModel.findAll({
+            where: { id: req.params.id }
+        })
+    res.json(...result)
     }
 
-    get = async (req, res) => {
-        const result = await model.get(req, res)
-        res.json(result)
-    }
+    create = async(req, res) = {
+        const { name } = req.body
 
-    create = async (req, res) => {
-        const result = await model.create(req, res)
-        res.json(result)
-    }
+    if(name){
+    const model = await ArtistModel.create(req.body)
+    return res.json({ newid: model.id })
+}
+}
 
-    update = async (req, res) => {
-        const result = await model.update(req, res)
-        res.json(result)
-    }
+update = async(req, res) = {
+    const { name} = req.body
 
-    destroy = async (req, res) => {
-        const result = await model.destroy(req, res)
-        res.json(result)
-    }
+if(name) {
+    const model = await ArtistModel.update(req.body, { where: { id: id } })
+    return res.json({ newid: model.id })
+}
+}
 
-
-    search = async (req, res) => {
-        const result = await model.search(req, res)
-        res.json(result)
+delete = async (req, res) => {
+    try {
+        await ArtistModel.destroy({ where: { id: req.params, id } })
+        res.sendStatus(200)
     }
+    catch (err) {
+        res.send(err)
+    }
+}
 
 }
 export default ArtistController
