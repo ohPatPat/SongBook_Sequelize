@@ -1,21 +1,19 @@
-import express from "express";
-import { Sequelize } from "../Config/db.suquelize.js";
+import express from 'express';
+import SongController from '../Controllers/song.controller.js';
 
-const router = express.Router()
+const router = express.Router();
 
-import SongModel from '../Models/song.model.js'
-import ArtistModel from '../Models/artist.model.js'
+// Instans (forekomst) af class SongController
+const controller = new SongController();
 
+/* Song Routes Begin */
+router.get('/api/song', (req, res) => { controller.list(req, res) })
+router.get('/api/song/search', (req, res) => { controller.search(req, res) })
+router.get('/api/song/:id([0-9]*)', (req, res) => { controller.get(req, res) })
+router.post('/api/song', (req, res) => { controller.create(req, res) })
+router.put('/api/song', (req, res) => { controller.update(req, res) })
+router.delete('/api/song/:id([0-9]*)', (req, res) => { controller.delete(req, res) })
 
-router.get('/api/song', (req, res) => {
-    try {
-        sequelize.sync()
-        res.sendStatus(200)
-    }
-    catch (err) {
-        res.send(err)
-    }
-})
-
+/* Song Routes End */
 
 export { router }
